@@ -30,7 +30,6 @@ public class ForecastFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.forecastfragment, menu);
     }
 
@@ -57,6 +56,8 @@ public class ForecastFragment extends Fragment {
 
         ListView lv = (ListView) rootView.findViewById(R.id.listview_forecast);
         lv.setAdapter(adapter);
+
+        setHasOptionsMenu(true);
 
         return rootView;
     }
