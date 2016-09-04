@@ -1,5 +1,6 @@
 package com.sunshine;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,8 +91,11 @@ public class ForecastFragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String forecast=adapter.getItem(position);
 
-                Toast.makeText(getActivity(), adapter.getItem(position), Toast.LENGTH_SHORT).show();
+                Intent detailsScreen = new Intent(getActivity(), DetailActivity.class);
+                detailsScreen.putExtra(Intent.EXTRA_TEXT, forecast);
+                startActivity(detailsScreen);
             }
         });
 
@@ -162,7 +165,7 @@ public class ForecastFragment extends Fragment {
                 }
                 forecastJsonStr = buffer.toString();
             } catch (IOException e) {
-                Log.e("PlaceholderFragment", "Error ", e);
+                Log.e("ForecastFragment", "Error ", e);
                 // If the code didn't successfully get the weather data, there's no point in attemping
                 // to parse it.
                 return null;
