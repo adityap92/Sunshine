@@ -1,9 +1,11 @@
 package com.sunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
@@ -30,8 +32,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 /**
@@ -51,13 +51,15 @@ public class ForecastFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         int id = item.getItemId();
         if(id==R.id.action_refresh){
-            new FetchWeatherTask().execute("30309");
+            updateWeatherTask();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,21 +71,11 @@ public class ForecastFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String[] forecast = {
-                "Today - Sunny - 88/51",
-                "Today - Sunny - 88/51",
-                "Today - Sunny - 88/51",
-                "Today - Sunny - 88/51",
-                "Today - Sunny - 88/51"
-        };
-
-        List<String> weekForecast = new ArrayList<String>(Arrays.asList(forecast));
-
         adapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.list_item_forecast,
                 R.id.list_item_forecast_textview,
-                weekForecast);
+                new ArrayList<String>());
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         ListView lv = (ListView) rootView.findViewById(R.id.listview_forecast);
@@ -101,6 +93,20 @@ public class ForecastFragment extends Fragment {
 
         return rootView;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeatherTask();
+    }
+
+    private void updateWeatherTask(){
+        FetchWeatherTask weatherTask = new FetchWeatherTask();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String syncConnPref = sharedPref.getString("location","");
+        weatherTask.execute(syncConnPref);
+    }
+
 
     private class FetchWeatherTask extends AsyncTask<String, Void, String[]>{
 

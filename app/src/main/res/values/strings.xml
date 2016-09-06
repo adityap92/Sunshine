@@ -3,4 +3,13 @@
     <string name="action_settings">Settings</string>
     <string name="refresh" translatable="false">Refresh</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string-array name="temp_types">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+    <string-array name="temp_values">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
 </resources>
