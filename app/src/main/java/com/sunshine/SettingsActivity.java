@@ -19,6 +19,7 @@ implements Preference.OnPreferenceChangeListener{
 
 
         bindPreferenceSummaryToValue(findPreference("location"));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_units_key)));
 
         SharedPreferences.OnSharedPreferenceChangeListener listener =
                 new SharedPreferences.OnSharedPreferenceChangeListener() {

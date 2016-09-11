@@ -9,7 +9,7 @@
         android:inputType="text"
         android:maxLines="1"/>
     <ListPreference
-        android:key="pref_syncConnectionType"
+        android:key="temp"
         android:title="Temps"
         android:dialogTitle="Temperature Units"
         android:entries="@array/temp_types"
